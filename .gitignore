@@ -1,0 +1,15 @@
+*.xcodeproj
+
+*.xcscheme
+
+*.xcuserstate
+
+*.pbxproj
+
+*.xcworkspacedata
+
+*.plist
+
+*.xcbkptlist
+
+*.1
