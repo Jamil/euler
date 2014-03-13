@@ -20,7 +20,6 @@
   (cond ((>= i (length x)) 0)
         ((> j i) 0)
         (else
-         ;(display (list-ref (list-ref x i) j)) (display "\n")
          (+ (list-ref (list-ref x i) j) (max (traverse x (+ i 1) j) (traverse x (+ i 1) (+ j 1)))))))
          
   
