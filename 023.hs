@@ -1,3 +1,6 @@
+import Data.Set (Set)
+import qualified Data.Set as Set
+
 makesieve 0 = []
 makesieve x = 
   0 : makesieve (x - 1)
@@ -22,4 +25,9 @@ arecur n sieve
 
 abundants :: Int -> [Int]
 abundants x =
-  (arecur 0 (makesieve x))  
+  arecur 0 (makesieve x)
+
+seta x = Set.fromList (abundants x)
+
+issum n = head [x | x <- (abundants n), (Set.member (n - x) (Set.fromList $ abundants n))]
+
