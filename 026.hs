@@ -1,3 +1,5 @@
+main = putStrLn (show (maximum $ longest 1000))
+
 -- List Helper Functions
 -- Various functions to help in the processing of lists
 deletelast n [] = []
@@ -44,7 +46,7 @@ declist x = (declist (div x 10)) ++ [mod x 10]
 
 fullproc n = atomize (rep (declist $ bigdiv n)) 1
 
-bigdiv n = (div (10^1000) n) 
+bigdiv n = (div (10^2000) n) 
 
 -- Generation
 longest 1 = []
