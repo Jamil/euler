@@ -25,5 +25,5 @@
   (cond ((eq? exp 0) '(1))
         (else
          (mult-list (power (- exp 1)) 2 0))))
- 
+  
   
