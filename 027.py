@@ -1,40 +1,35 @@
 import math
 import array
 
-def markSieve(n,sieve):
-  for i in range(1, len(sieve) - 1):
-    if i % n == 0:
-      sieve[i] = 1
-  return sieve
-
 def isPrime(n):
-  for i in range(2, int(math.sqrt(n) + 1)):
+  for i in range(2, int(math.sqrt(abs(n)) + 1)):
     if n % i == 0:
       return False
   return True
 
-def findPrimes(n):
-  primes = []
-  sieve = [0]*n
-  sieve[1] = 1
-  for i in range(2, len(sieve)):
-    if isPrime(i):
-      sieve = markSieve(i, sieve)
-      primes.append(i)
-  return primes
-
-def tryQuadratic(a,b,c):
+def tryQuadratic(b,c):
+  # Try all x in x^2 + bx + c
   allprimes = True
   x = 0
   while allprimes:
-    
+    ans = (x**2) + (b*x) + c
+    if not isPrime(ans):
+      allprimes = False
+    x = x + 1
+  return x - 2
 
-def quadprimes(n):
+def quadprimes(min):
   maxNum = 0
-  for i in range(-999,999):
-    for j in range(-999,999):
-      num = tryQuadratic(i,i,j)
+  maxI = -1
+  maxJ = -1
+  for i in range(min,abs(min)):
+    for j in range(min, abs(min)):
+      num = tryQuadratic(i,j)
       if num > maxNum:
         maxNum = num
+        maxI = i
+        maxJ = j
+  print str(maxI) + ", " + str(maxJ)
+  return maxI * maxJ
 
-print findPrimes(100)
+print quadprimes(-999)
