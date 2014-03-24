@@ -1,19 +1,17 @@
-import Data.Set (Set)
-import qualified Data.Set as Set
+coins = [200, 100, 50, 20, 10, 5, 2, 1]
 
-import Data.Map (Map)
-import qualified Data.Map as Map
+coinsums n = (maxSum n) : distributeAll (maxSum n)
 
-coins = [1, 2, 5, 10, 20, 50, 100, 200]
+maxSum n = distribute [0,0,0,0,0,0,0,0] 0 n
 
-fix n = removedups $ organize n
+distribute xs 8 carry = xs
+distribute (x:xs) i carry =
+  x + (div carry (coins !! i)) : distribute xs (i + 1) (mod carry (coins !! i))
 
-coinsums = (map coinsums' [0..] !!)
-  where
-    coinsums' 0 = [[]]
-    coinsums' n = [x:ps | x <- coins, n >= x, ps <- (coinsums (n - x))]
+distributeFirst (x:xs) i
+  | x == 0 = x : distributeFirst xs (i + 1)
+  | otherwise = (x - 1) : distribute xs (i + 1) (coins !! i)
 
-organize [] = []
-organize (x:xs) = [(length $ filter (== p) x) | p <- coins] : (organize xs)
-
-removedups x = Set.toList(Set.fromList(x))
+distributeAll xs 
+  | (all (== 0) (take (length coins - 1) xs)) = []
+  | otherwise = distributeFirst xs 0 : (distributeAll (distributeFirst xs 0))
