@@ -1,3 +1,5 @@
+import Data.List 
+
 emptyWallet = [(0, 200), (0, 100), (0, 50), (0, 20), (0, 10), (0, 5), (0, 2), (0, 1)]
 
 -- Distribute carry over the list xs 
@@ -7,6 +9,22 @@ distribute carry (x:xs) =
     where 
       denomination = snd x
       balance = fst x
+
+howmany 1 = 1
+howmany coin = 
+  (sum $ multLast (f $ decomposition coin) (map howmany $ s knowncoins))
+  where
+    coins = s emptyWallet
+    knowncoins = tail $ takeLast (coinIndex coin $ s emptyWallet) emptyWallet 
+
+multLast a [] = a
+multLast a b = multLast (init a) (init b) ++ [(last a) * (last b)]
+
+coinIndex coin = (\(Just i)->i) . findIndex (== coin) 
+
+takeLast 0 xs = []
+takeLast n xs = l
+  where (f,l) = splitAt n xs
 
 -- Distributes one coin of denomination 'n' over the lower denominations 
 distributeCoin n [] = [] -- Not found; should never happen
@@ -30,8 +48,7 @@ distributeEach xs i
     balance = fst (xs !! i)
 
 addLists [] [] = []
-addLists (a:as) (b:bs) = a + b : addLists as bs 
+addLists (a:as) (b:bs) = (fst a) + (fst b) : addLists as bs 
 
--- Only show first element of tuple
 f = map fst
-
+s = map snd
